@@ -19,19 +19,12 @@ class Minefield(pygame.sprite.Sprite):
                 self.positions[y][x] = pygame.Rect(l*y, l*x, l, l)
     
     def update(self):
-        img_pos = self.rect.topleft
-        mouse_pos = pygame.mouse.get_pos()
-
         for y in range(self.n):
             for x in range(self.n):
                 pos = self.positions[y][x]
-                x_, y_, w_, h_ = pos
                 cor = DEFAULT_SQUARE_COLOR
-                mpx, mpy = mouse_pos
-                mpx -= img_pos[0]
-                mpy -= img_pos[1]
-
-                if (x_ < mpx < x_+w_) and (y_ < mpy < y_+h_):
+                
+                if pos.move(*self.rect.topleft).collidepoint(pygame.mouse.get_pos()):
                     cor = SELECTED_SQUARE_COLOR
 
                 borded_rect(self.image, cor, pos, self.screen_size[0]//400)
