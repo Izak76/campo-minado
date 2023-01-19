@@ -6,6 +6,14 @@ from sprites import *
 import pygame
 
 
+def show_name_button(button:Button):
+    font = pygame.font.SysFont("Tahoma", int(height*0.04))
+    r = font.render(button.name, True, (255,)*3)
+    if r.get_width() > sobra*p:
+        r = pygame.transform.smoothscale(r, (sobra*p, sobra*p*r.get_height()/r.get_width()))
+    
+    screen.blit(r, (dial_x-(1-p)*sobra/2+(sobra-r.get_width())//2, (rb1.y-r.get_height())*0.97))
+
 pygame.init()
 pygame.display.set_caption("Campo minado")
 pygame.display.set_icon(pygame.image.load("src/bomb.png"))
@@ -26,14 +34,20 @@ dial_wh = (sobra*p, sobra*0.3)
 tempo = Dial("src/chronometer.png", pygame.Rect(dial_x, minas_pos[1]+height//60, *dial_wh), rp)
 mcount = Dial("src/bomb.png", pygame.Rect(dial_x, minas_pos[1]+tempo.rect.height+height//12, *dial_wh), rp)
 
-rb1 = pygame.Rect(0, 0, *(sobra*0.25,)*2)
-rb1.x = minas_pos[0]+minas.get_width()+sobra*0.1
-rb1.y = minas_pos[1]+minas.get_height()-rb1.h
-rb2 = pygame.Rect(rb1.right+sobra*0.1, rb1.y, sobra*0.45, rb1.h)
-b1 = Button(rb1, image="src/gear.png")
-b2 = Button(rb2, label="Novo jogo")
-sprites1 = pygame.sprite.Group(tempo, mcount, mf)
-sprites2 = pygame.sprite.Group(mf, b1, b2)
+be = (1-p)/2
+bw = (sobra*(1-3*be))/3
+rb1 = pygame.Rect(0, 0, *(bw,)*2)
+rb1.x = minas_pos[0]+minas.get_width()+sobra*be
+rb1.y = minas_pos[1]+minas.get_height()-rb1.h*(1+be)
+rb2 = rb1.copy()
+rb2.left = rb1.right+sobra*(be/2)
+rb3 = rb2.copy()
+rb3.left = rb2.right+sobra*(be/2)
+b1 = Button(rb1, "Ajustes", image="src/gear.png")
+b2 = Button(rb2, "Histórico", image="src/history.png")
+b3 = Button(rb3, "Opções de jogo", image="src/options.png")
+sprites1 = pygame.sprite.Group(tempo, mcount)
+sprites2 = pygame.sprite.Group(mf, b1, b2, b3)
 
 while True:
     for evt in pygame.event.get():
@@ -41,16 +55,9 @@ while True:
             pygame.quit()
             exit()
 
-        elif evt.type == pygame.KEYUP:
-            if evt.key == pygame.K_UP:
-                tempo.counter += 1
-
-            elif evt.key == pygame.K_DOWN:
-                tempo.counter -= 1
-
     screen.fill(BACKGROUND_COLOR)
 
     sprites1.draw(screen)
-    sprites2.update()
+    sprites2.update(mouse_over_func=show_name_button)
     sprites2.draw(screen)
     pygame.display.flip()

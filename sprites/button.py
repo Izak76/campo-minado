@@ -3,11 +3,12 @@ from utils.colors import *
 import pygame
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, rect:pygame.Rect, command=None, *, label:str=None, image:str=None):
+    def __init__(self, rect:pygame.Rect, name='', command=None, *, label:str=None, image:str=None):
         super().__init__()
 
         self.image = pygame.Surface(rect[-2:], pygame.SRCALPHA)
         self.rect = rect
+        self.name = name
 
         if label != None:
             font = pygame.font.SysFont("Tahoma", int(self.image.get_height()))
@@ -31,22 +32,25 @@ class Button(pygame.sprite.Sprite):
             raise AttributeError('Buttton deve ter o atributo "label" ou "image" definido')
         
         if command is None:
-            command = lambda: print("Botão pressionado")
+            command = lambda: print(f"Botão \"{name}\" pressionado")
 
         self.command = command
 
         self.update()
     
-    def update(self):
+    def update(self, *, mouse_over_func=lambda *args: print("Em cima")):
+        b = (9*self.rect.w/154.7).__ceil__()
         if self.rect.collidepoint(pygame.mouse.get_pos()):
-            borded_rect(self.image, BUTTON_SEL_BG, self.image.get_rect(), 3, BUTTON_SEL_BORDER, 3)
+            borded_rect(self.image, BUTTON_SEL_BG, self.image.get_rect(), b, BUTTON_SEL_BORDER, b)
             self.image.blit(self.content2, self.content2.get_rect(center=self.image.get_rect().center))
+
+            mouse_over_func(self)
 
             for evt in pygame.event.get(pygame.MOUSEBUTTONUP):
                 if evt.button == 1:
                     self.command()
 
         else:
-            borded_rect(self.image, BUTTON_BG, self.image.get_rect(), 3, BUTTON_BORDER, 3)
+            borded_rect(self.image, BUTTON_BG, self.image.get_rect(), b, BUTTON_BORDER, b)
             self.image.blit(self.content1, self.content1.get_rect(center=self.image.get_rect().center))
         
