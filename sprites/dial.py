@@ -25,9 +25,7 @@ class Dial(pygame.sprite.Sprite):
         self.__counter = value
         txtcolor = (0, 0, 0)
         rv = vertical_crop(self.font.render(str(value), True, txtcolor), txtcolor)
-        #rv = self.font.render(str(value), True, (0, 0, 0))
         rv_pos = rv.get_rect(center=self.dial.get_rect().center)
         borded_rect(self.dial, DIAL_COLOR, (0, 0, self.dial.get_width(), self.dial.get_height()), self.scr_width//200, DIAL_BORDER_COLOR, self.scr_width//160)
         self.dial.blit(rv, rv_pos)
-        #draw.rect(self.dial, (255,0,0), rv_pos, 1)
         self.image.blit(self.dial, (self.icon.get_width(), 0))

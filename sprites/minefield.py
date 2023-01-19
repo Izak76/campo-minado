@@ -18,7 +18,7 @@ class Minefield(pygame.sprite.Sprite):
             for x in range(n):
                 self.positions[y][x] = pygame.Rect(l*y, l*x, l, l)
     
-    def update(self):
+    def update(self, *args, **kwargs):
         for y in range(self.n):
             for x in range(self.n):
                 pos = self.positions[y][x]
