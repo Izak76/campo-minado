@@ -1,13 +1,15 @@
 from tkinter import Tk, Toplevel, ttk
+from abc import ABC, abstractmethod
 
-class MenuBase:
-    def __init__(self, master:Tk|Toplevel|None=None):
+class MenuBase(ABC):
+    @abstractmethod
+    def __init__(self, master:Tk|Toplevel|None=None, resizable:bool=False):
         self.mframe = ttk.Frame(master, height=self.height, width=self.width)
         self.mainwindow = master if master else self.mframe
 
         if master:
             master.title(self.title)
-            master.resizable(0, 0)
+            master.resizable(resizable, resizable)
             center_window(master, self.width, self.height)
         
         self.mframe.pack(side="top")
