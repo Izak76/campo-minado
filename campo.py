@@ -17,7 +17,7 @@ def show_name_button(button:Button):
 pygame.init()
 pygame.display.set_caption("Campo minado")
 pygame.display.set_icon(pygame.image.load("src/bomb.png"))
-resolucoes = ((400, 300), (640, 480), (800, 600), (960, 720), (1024, 768))
+resolucoes = ((640, 480), (800, 600), (960, 720), (1024, 768))
 rp = resolucoes[2] #Resulução padrão
 width, height = rp
 
