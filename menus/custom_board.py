@@ -1,9 +1,9 @@
-import tkinter as tk
+from . import MenuBase
 import tkinter.ttk as ttk
-from menus import MenuBase
+import tkinter as tk
 
 
-class CustomBoard(MenuBase):
+class CustomBoardMenu(MenuBase):
     def __init__(self, master:tk.Tk|tk.Toplevel|None=None, diff_id:int=0):
         self.width = 300
         self.height = 190
@@ -26,10 +26,3 @@ class CustomBoard(MenuBase):
         self.dific_name.place(anchor="nw", x=90, y=20)
         self.side.place(anchor="nw", x=226, y=60)
         self.nmine.place(anchor="nw", x=226, y=100)
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = CustomBoard(root)
-    app.run()
-
-

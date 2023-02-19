@@ -1,9 +1,9 @@
-import tkinter as tk
+from . import MenuBase
 import tkinter.ttk as ttk
-from menus import MenuBase
+import tkinter as tk
 
 
-class GameOptions(MenuBase):
+class GameOptionsMenu(MenuBase):
     def __init__(self, master:tk.Tk|tk.Toplevel|None=None):
         self.width = 325
         self.height = 225
@@ -36,10 +36,3 @@ class GameOptions(MenuBase):
         
         else:
             self.diff_opts["state"] = "disabled"
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GameOptions(root)
-    app.run()
-
-

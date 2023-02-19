@@ -1,10 +1,10 @@
-import tkinter as tk
+from . import MenuBase
 import tkinter.ttk as ttk
+import tkinter as tk
 import re
-from menus import MenuBase
 
 
-class Configs(MenuBase):
+class ConfigsMenu(MenuBase):
     def __init__(self, master:tk.Tk|tk.Toplevel|None=None):
         self.width = 336
         self.height = 360
@@ -94,10 +94,3 @@ class Configs(MenuBase):
         else:
             self.cwidth.trace_remove("write", self.cwidth.trace_info()[0][1])
             self.cheight.trace_remove("write", self.cheight.trace_info()[0][1])
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = Configs(root)
-    app.run()
-
-
